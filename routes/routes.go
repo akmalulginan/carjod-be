@@ -1,11 +1,9 @@
 package routes
 
 import (
-	"context"
 	"fmt"
 	"net/http"
 	"os"
-	"strconv"
 
 	"github.com/akmalulginan/carjod-be/middleware"
 	authH "github.com/akmalulginan/carjod-be/services/auth/handler"
@@ -41,11 +39,6 @@ func Setup(r *gin.Engine, db *gorm.DB) {
 
 	userUsecase := userU.NewUserUsecase(userRepository)
 	userH.NewUserHandler(v1, userUsecase)
-
-	userQty, _ := strconv.Atoi(os.Getenv("GENERATE_USER_QTY"))
-	if userQty > 0 {
-		userUsecase.GenerateUser(context.Background(), userQty)
-	}
 
 	matchRepository := matchR.NewMatchRepository(db)
 	matchUsecase := matchU.NewMatchUsecase(matchRepository, userRepository, txCoordinator)

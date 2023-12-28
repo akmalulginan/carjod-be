@@ -19,7 +19,6 @@ type User struct {
 	PremiumSwipe    bool             `json:"premium_swipe"`
 	PremiumVerified bool             `json:"premium_verified"`
 	PremiumActicve  bool             `json:"premium_acticve"`
-
 }
 
 func (*User) TableName() string {
@@ -29,7 +28,6 @@ func (*User) TableName() string {
 type UserUsecase interface {
 	GetById(ctx context.Context, userId string) (user User, err error)
 	Edit(ctx context.Context, user *User) (err error)
-	GenerateUser(ctx context.Context, qty int) error
 }
 
 type UserRepository interface {
