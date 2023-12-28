@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: carjod-postgres
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./storage/postgres/db-init-scripts:/docker-entrypoint-initdb.d
+
+  carjod-api:
+    build:
+      context: .      
+      dockerfile: Dockerfile
+    image: carjod-api:latest
+    container_name: carjod-api
+    ports:
+    - "${APP_PORT}:3000"
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    command: 
+     - /api/carjod-be
+
+volumes:
+  postgres_data:
+    driver: local
