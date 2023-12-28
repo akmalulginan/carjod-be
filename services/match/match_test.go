@@ -173,7 +173,6 @@ func TestMatchUsecase_Action(t *testing.T) {
 
 	mockMatchRepo.EXPECT().FindByUserId(ctx, expectedUser.Id, true).Return(expectedMatches, nil)
 	mockMatchRepo.EXPECT().FindLiked(ctx, data.TargetUserId, expectedUser.Id).Return(domain.Match{}, nil)
-	mockMatchRepo.EXPECT().Update(ctx, &domain.Match{}).Return(nil)
 	mockMatchRepo.EXPECT().Create(ctx, &data).Return(nil)
 
 	mockTxCoordinator.EXPECT().Begin(ctx).Return(ctx, nil)
@@ -359,7 +358,6 @@ func TestMatchUsecase_Action_PREMIUM_UNLIMITED(t *testing.T) {
 
 	mockMatchRepo.EXPECT().FindByUserId(ctx, expectedUser.Id, true).Return(expectedMatches, nil)
 	mockMatchRepo.EXPECT().FindLiked(ctx, data.TargetUserId, expectedUser.Id).Return(domain.Match{}, nil)
-	mockMatchRepo.EXPECT().Update(ctx, &domain.Match{}).Return(nil)
 	mockMatchRepo.EXPECT().Create(ctx, &data).Return(nil)
 
 	mockTxCoordinator.EXPECT().Begin(ctx).Return(ctx, nil)

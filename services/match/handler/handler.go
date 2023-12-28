@@ -35,7 +35,7 @@ func (h matchHandler) GetMatches(ctx *gin.Context) {
 	users, err := h.matchUsecase.GetMatches(ctx, userId)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, utils.Response{
-			Message: "failed to register",
+			Message: "failed to get matches",
 			Error:   err.Error(),
 		})
 		return
@@ -58,7 +58,7 @@ func (h matchHandler) GetCandidate(ctx *gin.Context) {
 	user, err := h.matchUsecase.GetCandidate(ctx, userId)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, utils.Response{
-			Message: "failed to register",
+			Message: "failed to get matches",
 			Error:   err.Error(),
 		})
 		return
@@ -72,7 +72,7 @@ func (h matchHandler) Action(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&match)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, utils.Response{
-			Message: "failed to register",
+			Message: "failed to process data",
 			Error:   err.Error(),
 		})
 		return
@@ -91,7 +91,7 @@ func (h matchHandler) Action(ctx *gin.Context) {
 	err = h.matchUsecase.Action(ctx, &match)
 	if err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, utils.Response{
-			Message: "failed to register",
+			Message: "failed to proccess",
 			Error:   err.Error(),
 		})
 		return

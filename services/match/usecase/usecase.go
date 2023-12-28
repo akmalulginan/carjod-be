@@ -71,8 +71,16 @@ func (u matchUsecase) Action(ctx context.Context, data *domain.Match) (err error
 		return err
 	}
 
-	if len(matches) >= 10 && !user.PremiumSwipe && !user.PremiumActicve {
-		return errors.New("daily limit has been reached")
+	if len(matches) >= 10 {
+		err = errors.New("daily limit has been reached")
+
+		if !user.PremiumSwipe {
+			return err
+		}
+
+		if user.PremiumSwipe && !user.PremiumActicve {
+			return err
+		}
 	}
 
 	ctx, err = u.txCoordinator.Begin(ctx)
@@ -91,12 +99,13 @@ func (u matchUsecase) Action(ctx context.Context, data *domain.Match) (err error
 		if match.IsLike {
 			match.IsMatch = true
 			data.IsMatch = true
+
+			err = u.matchRepository.Update(ctx, &match)
+			if err != nil {
+				return err
+			}
 		}
 
-		err = u.matchRepository.Update(ctx, &match)
-		if err != nil {
-			return err
-		}
 	}
 
 	err = u.matchRepository.Create(ctx, data)
