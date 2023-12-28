@@ -47,12 +47,12 @@ func (u matchUsecase) GetMatches(ctx context.Context, userId string) (users []do
 		return nil, err
 	}
 
-	ids := make([]string, 0)
+	targetUserIds := make([]string, 0)
 	for _, v := range matches {
-		ids = append(ids, v.UserId)
+		targetUserIds = append(targetUserIds, v.TargetUserId)
 	}
 
-	users, err = u.userRepository.FindByIds(ctx, ids)
+	users, err = u.userRepository.FindByIds(ctx, targetUserIds)
 	if err != nil {
 		return nil, err
 	}

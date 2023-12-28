@@ -28,7 +28,7 @@ func (u premiumUsecase) Upgrade(ctx context.Context, data domain.Premium) (err e
 		if user.PremiumVerified {
 			premiumActive = utils.PremiumVerified
 		}
-		return fmt.Errorf("you are already %s", premiumActive)
+		return fmt.Errorf("you are already premium %s", premiumActive)
 	}
 
 	user.PremiumSwipe = data.Type == utils.PremiumSwipe
