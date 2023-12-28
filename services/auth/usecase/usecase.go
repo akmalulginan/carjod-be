@@ -24,12 +24,7 @@ func (u authUsecase) Login(ctx context.Context, data domain.Auth) (token string,
 		return "", errors.New("invalid email")
 	}
 
-	passwordHash, err := utils.HashPassword(data.Password)
-	if err != nil {
-		return "", err
-	}
-
-	err = utils.VerifyPassword(passwordHash, data.Password)
+	err = utils.VerifyPassword(user.PasswordHash, data.Password)
 	if err != nil {
 		return "", errors.New("invalid password")
 	}

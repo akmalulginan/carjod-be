@@ -71,7 +71,7 @@ func (u matchUsecase) Action(ctx context.Context, data *domain.Match) (err error
 		return err
 	}
 
-	if len(matches) >= 10 && !user.PremiumSwipe {
+	if len(matches) >= 10 && !user.PremiumSwipe && !user.PremiumActicve {
 		return errors.New("daily limit has been reached")
 	}
 
@@ -90,13 +90,12 @@ func (u matchUsecase) Action(ctx context.Context, data *domain.Match) (err error
 
 		if match.IsLike {
 			match.IsMatch = true
-
-			err = u.matchRepository.Update(ctx, &match)
-			if err != nil {
-				return err
-			}
-
 			data.IsMatch = true
+		}
+
+		err = u.matchRepository.Update(ctx, &match)
+		if err != nil {
+			return err
 		}
 	}
 

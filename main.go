@@ -38,4 +38,5 @@ func main() {
 
 	r := gin.Default()
 	routes.Setup(r, db)
+
 }

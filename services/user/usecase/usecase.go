@@ -76,7 +76,5 @@ func (u userUsecase) GenerateUser(ctx context.Context, qty int) error {
 		users = append(users, user)
 	}
 
-	u.userRepository.CreateBulk(ctx, &users)
-
-	return nil
+	return u.userRepository.CreateBulk(ctx, &users)
 }
