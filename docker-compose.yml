@@ -22,6 +22,8 @@ services:
     depends_on:
       - postgres
     restart: unless-stopped
+    volumes: 
+     - ~/upload:/api/file
     command: 
      - /api/carjod-be
 

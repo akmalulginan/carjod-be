@@ -19,6 +19,7 @@ type User struct {
 	PremiumSwipe    bool             `json:"premium_swipe"`
 	PremiumVerified bool             `json:"premium_verified"`
 	PremiumActicve  bool             `json:"premium_acticve"`
+	Photos          pq.StringArray   `json:"photos,omitempty" gorm:"type:text[]"`
 }
 
 func (*User) TableName() string {

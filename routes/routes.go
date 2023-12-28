@@ -14,6 +14,7 @@ import (
 	premiumH "github.com/akmalulginan/carjod-be/services/premium/handler"
 	premiumU "github.com/akmalulginan/carjod-be/services/premium/usecase"
 	txC "github.com/akmalulginan/carjod-be/services/tx/repository"
+	uploadH "github.com/akmalulginan/carjod-be/services/upload/handler"
 	userH "github.com/akmalulginan/carjod-be/services/user/handler"
 	userR "github.com/akmalulginan/carjod-be/services/user/repository"
 	userU "github.com/akmalulginan/carjod-be/services/user/usecase"
@@ -22,6 +23,8 @@ import (
 )
 
 func Setup(r *gin.Engine, db *gorm.DB) {
+	r.Static("/public", "./public")
+	r.Static("/file", "./file")
 
 	r.Use(middleware.CORS())
 
@@ -43,6 +46,8 @@ func Setup(r *gin.Engine, db *gorm.DB) {
 	matchRepository := matchR.NewMatchRepository(db)
 	matchUsecase := matchU.NewMatchUsecase(matchRepository, userRepository, txCoordinator)
 	matchH.NewMatchHandler(v1, matchUsecase)
+
+	uploadH.NewUploadHandler(v1)
 
 	server := http.Server{
 		Addr:    fmt.Sprintf(":%s", os.Getenv("APP_PORT")),
