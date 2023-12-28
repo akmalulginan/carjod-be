@@ -117,18 +117,18 @@ func (mr *MockMatchRepositoryMockRecorder) Create(ctx, data interface{}) *gomock
 }
 
 // FindByUserId mocks base method.
-func (m *MockMatchRepository) FindByUserId(ctx context.Context, userId string, isToday bool) ([]domain.Match, error) {
+func (m *MockMatchRepository) FindByUserId(ctx context.Context, userId string, isMatch, isToday bool) ([]domain.Match, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "FindByUserId", ctx, userId, isToday)
+	ret := m.ctrl.Call(m, "FindByUserId", ctx, userId, isMatch, isToday)
 	ret0, _ := ret[0].([]domain.Match)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // FindByUserId indicates an expected call of FindByUserId.
-func (mr *MockMatchRepositoryMockRecorder) FindByUserId(ctx, userId, isToday interface{}) *gomock.Call {
+func (mr *MockMatchRepositoryMockRecorder) FindByUserId(ctx, userId, isMatch, isToday interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByUserId", reflect.TypeOf((*MockMatchRepository)(nil).FindByUserId), ctx, userId, isToday)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FindByUserId", reflect.TypeOf((*MockMatchRepository)(nil).FindByUserId), ctx, userId, isMatch, isToday)
 }
 
 // FindLiked mocks base method.

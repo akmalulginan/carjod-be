@@ -23,7 +23,7 @@ func (u matchUsecase) GetCandidate(ctx context.Context, userId string) (candidat
 		return user, err
 	}
 
-	matches, err := u.matchRepository.FindByUserId(ctx, userId, false)
+	matches, err := u.matchRepository.FindByUserId(ctx, userId, false, false)
 	if err != nil {
 		return user, err
 	}
@@ -42,7 +42,7 @@ func (u matchUsecase) GetCandidate(ctx context.Context, userId string) (candidat
 }
 
 func (u matchUsecase) GetMatches(ctx context.Context, userId string) (users []domain.User, err error) {
-	matches, err := u.matchRepository.FindByUserId(ctx, userId, false)
+	matches, err := u.matchRepository.FindByUserId(ctx, userId, true, false)
 	if err != nil {
 		return nil, err
 	}
@@ -66,7 +66,7 @@ func (u matchUsecase) Action(ctx context.Context, data *domain.Match) (err error
 		return err
 	}
 
-	matches, err := u.matchRepository.FindByUserId(ctx, data.UserId, true)
+	matches, err := u.matchRepository.FindByUserId(ctx, data.UserId, false, true)
 	if err != nil {
 		return err
 	}

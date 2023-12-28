@@ -18,12 +18,15 @@ func NewMatchRepository(db *gorm.DB) domain.MatchRepository {
 	return matchRepository{db: db}
 }
 
-func (r matchRepository) FindByUserId(ctx context.Context, userId string, isToday bool) (matches []domain.Match, err error) {
+func (r matchRepository) FindByUserId(ctx context.Context, userId string, isMatch, isToday bool) (matches []domain.Match, err error) {
 	db := r.db.WithContext(ctx).Where("user_id = ?", userId)
 	if isToday {
 		loc, _ := utils.GetLocaleJKT()
 		startOfDay := time.Now().In(loc).Truncate(24 * time.Hour)
 		db = db.Where("created_at >= ?", startOfDay)
+	}
+	if isMatch {
+		db = db.Where("is_match = ?", isMatch)
 	}
 	err = db.Find(&matches).Error
 	return matches, err

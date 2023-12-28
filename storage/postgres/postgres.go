@@ -28,8 +28,6 @@ func Init(cred Credential) (*gorm.DB, error) {
 		return nil, err
 	}
 
-	db = db.Debug()
-
 	db.Exec("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";")
 
 	migrate(db)

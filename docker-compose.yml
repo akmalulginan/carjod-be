@@ -10,7 +10,6 @@ services:
       - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./storage/postgres/db-init-scripts:/docker-entrypoint-initdb.d
 
   carjod-api:
     build:

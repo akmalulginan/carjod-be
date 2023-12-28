@@ -62,7 +62,7 @@ func TestMatchUsecase_GetCandidate(t *testing.T) {
 	}
 
 	mockUserRepo.EXPECT().FindById(ctx, expectedUser.Id).Return(expectedUser, nil)
-	mockMatchRepo.EXPECT().FindByUserId(ctx, expectedUser.Id, false).Return(expectedMatches, nil)
+	mockMatchRepo.EXPECT().FindByUserId(ctx, expectedUser.Id, false, false).Return(expectedMatches, nil)
 	mockUserRepo.EXPECT().FindCandidate(ctx, expectedUser, gomock.Any()).Return(expectedCandidate, nil)
 
 	result, err := matchUseCase.GetCandidate(ctx, expectedUser.Id)
@@ -120,7 +120,7 @@ func TestMatchUsecase_GetMatches(t *testing.T) {
 		},
 	}
 
-	mockMatchRepo.EXPECT().FindByUserId(ctx, userId, false).Return(expectedMatches, nil)
+	mockMatchRepo.EXPECT().FindByUserId(ctx, userId, true, false).Return(expectedMatches, nil)
 	mockUserRepo.EXPECT().FindByIds(ctx, gomock.Any()).Return(expectedUserMatches, nil)
 
 	result, err := matchUseCase.GetMatches(ctx, userId)
@@ -171,7 +171,7 @@ func TestMatchUsecase_Action(t *testing.T) {
 
 	mockUserRepo.EXPECT().FindById(ctx, expectedUser.Id).Return(expectedUser, nil)
 
-	mockMatchRepo.EXPECT().FindByUserId(ctx, expectedUser.Id, true).Return(expectedMatches, nil)
+	mockMatchRepo.EXPECT().FindByUserId(ctx, expectedUser.Id, false, true).Return(expectedMatches, nil)
 	mockMatchRepo.EXPECT().FindLiked(ctx, data.TargetUserId, expectedUser.Id).Return(domain.Match{}, nil)
 	mockMatchRepo.EXPECT().Create(ctx, &data).Return(nil)
 
@@ -266,7 +266,7 @@ func TestMatchUsecase_Action_LIMIT_REACHED(t *testing.T) {
 
 	mockUserRepo.EXPECT().FindById(ctx, expectedUser.Id).Return(expectedUser, nil)
 
-	mockMatchRepo.EXPECT().FindByUserId(ctx, expectedUser.Id, true).Return(expectedMatches, nil)
+	mockMatchRepo.EXPECT().FindByUserId(ctx, expectedUser.Id, false, true).Return(expectedMatches, nil)
 
 	err := matchUseCase.Action(ctx, &data)
 
@@ -356,7 +356,7 @@ func TestMatchUsecase_Action_PREMIUM_UNLIMITED(t *testing.T) {
 
 	mockUserRepo.EXPECT().FindById(ctx, expectedUser.Id).Return(expectedUser, nil)
 
-	mockMatchRepo.EXPECT().FindByUserId(ctx, expectedUser.Id, true).Return(expectedMatches, nil)
+	mockMatchRepo.EXPECT().FindByUserId(ctx, expectedUser.Id, false, true).Return(expectedMatches, nil)
 	mockMatchRepo.EXPECT().FindLiked(ctx, data.TargetUserId, expectedUser.Id).Return(domain.Match{}, nil)
 	mockMatchRepo.EXPECT().Create(ctx, &data).Return(nil)
 

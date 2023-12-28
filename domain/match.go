@@ -23,7 +23,7 @@ type MatchUsecase interface {
 }
 
 type MatchRepository interface {
-	FindByUserId(ctx context.Context, userId string, isToday bool) ([]Match, error)
+	FindByUserId(ctx context.Context, userId string, isMatch, isToday bool) ([]Match, error)
 	FindLiked(ctx context.Context, userId, targetId string) (Match, error)
 	Create(ctx context.Context, data *Match) error
 	Update(ctx context.Context, data *Match) error
